@@ -7,19 +7,78 @@
 }
 
 body{ 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centra verticalmente */
+    align-items: center;     /* centra horizontalmente */
+    font-family: Arial, sans-serif;
     background: linear-gradient(to right, #ffff, #0b58bf);
 }
 
 header{
     display: flex;
-    flex-direction: row;
-    justify-content:space-evenly;
+    justify-content:center;
+    gap: 20px;
+    padding: 20px;
     align-items: center;
 }
 
+header h1{ 
+    text-decoration: underline;
+    text-align: center;
+    font-size: 24px;
+    color: #0b58bf;
+}
+
+
 .login-container{
-    display: flex;
+    /*display: flex;
     flex-direction: column;
     width: 100px;
-    height: 200px;
+    height: 200px;*/
+    width: 320px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.2); /* transparencia */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);  /* sombra */
+    border-radius: 10px;
+    backdrop-filter: blur(8px); /* efecto de vidrio si quieres */
+    text-align: center;
+}
+
+/* CAMPOS DE FORMULARIO */
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.login-container input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+  /* BOTÓN */
+.login-container button {
+    padding: 10px;
+    background-color: #0b58bf;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #063f8f;
+}
+
+footer{
+    height: 170px;
+    display: flex;
+    align-items: center;
+    
+
 }
