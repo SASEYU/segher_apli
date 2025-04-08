@@ -1,0 +1,126 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #ffffff, #0b58bf);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header{
+    display: flex;
+    justify-content:center;
+    gap: 20px;
+    padding: 20px;
+    align-items: center;
+}
+
+header h1{ 
+    text-decoration: underline;
+    text-align: center;
+    font-size: 24px;
+    color: #0b58bf;
+}
+
+header nav ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+}
+  
+header nav li {
+    cursor: pointer;
+    font-weight: bold;
+    color: #0b58bf;
+    transition: color 0.3s ease;
+}
+  
+header nav li:hover {
+    color: #063f8f;
+}
+
+/* MAIN */
+main.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+  }
+  
+  main h2 {
+    text-align: center;
+    color: #0b58bf;
+    margin-bottom: 20px;
+  }
+  
+  nav ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 20px 0;
+  }
+  
+  .clienteform {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  input, select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  button {
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"] {
+    background-color: #0b58bf;
+    color: white;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #063f8f;
+  }
+  
+  button.limpiar {
+    background-color: #e0e0e0;
+  }
+  
+  button.limpiar:hover {
+    background-color: #c2c2c2;
+  }
+
+
+
+/*FOOTER*/
+footer{
+    height: 170px;
+    display: flex;
+    align-items: center;
+}

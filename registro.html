@@ -4,8 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" href="registro.css">
 </head>
 <body>
+    <header>
+        <figure>
+            <img src="imagenes/segher-logo.svg" alt="logotipo SEGHER" width="100">
+        </figure>
+        <h1>Sistema de Registro y Cotización</h1>
+        <nav>
+            <ul>
+                <li>Cotización</li>
+                <li>Salir</li>
+            </ul>
+        </nav>
+    </header>
     
+    <main class="form-container">
+        <div>
+            <h2>Cliente</h2>
+            <nav>
+                <ul>
+                    <li>Registro</li>
+                    <li>Buscar</li>
+                </ul>
+            </nav>
+        </div>
+        <section>
+            <h3>Registro</h3>
+            <form class="clienteform">
+                <label for="nombre">Nombre o Razón Social:</label>
+                <input type="text" id="nombre" name="nombre" required>
+          
+                <label for="tipoDocumento">Tipo de Documento:</label>
+                <select id="tipoDocumento" name="tipoDocumento" required>
+                  <option value="">Seleccione</option>
+                  <option value="dni">DNI</option>
+                  <option value="ruc">RUC</option>
+                  <option value="ce">CE</option>
+                </select>
+          
+                <label for="representante">Representante:</label>
+                <input type="text" id="representante" name="representante">
+          
+                <label for="numeroDocumento">N° de Documento:</label>
+                <input type="text" id="numeroDocumento" name="numeroDocumento" required>
+          
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion">
+          
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono">
+          
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo">
+          
+                <div class="botones">
+                  <button type="submit">Guardar</button>
+                  <button type="reset" class="limpiar">Limpiar</button>
+                </div>
+
+            </form>
+        </section>
+        <section>
+            <h3>Buscar</h3>
+            <form action="">
+
+            </form>
+        </section>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 SEGHER</p>
+    </footer>
 </body>
 </html>

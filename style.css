@@ -33,10 +33,6 @@ header h1{
 
 
 .login-container{
-    /*display: flex;
-    flex-direction: column;
-    width: 100px;
-    height: 200px;*/
     width: 320px;
     padding: 30px;
     background-color: rgba(255, 255, 255, 0.2); /* transparencia */
@@ -75,10 +71,9 @@ header h1{
     background-color: #063f8f;
 }
 
+/*FOOTER*/
 footer{
     height: 170px;
     display: flex;
     align-items: center;
-    
-
 }
