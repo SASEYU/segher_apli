@@ -30,7 +30,7 @@ header h1{
 
 header nav ul {
     display: flex;
-    gap: 15px;
+    gap: 25px;
     list-style: none;
 }
   
@@ -123,4 +123,5 @@ footer{
     height: 170px;
     display: flex;
     align-items: center;
+    text-align: center;
 }
