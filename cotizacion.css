@@ -73,6 +73,23 @@ select {
 }
 
 
+.subarticulo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .subarticulo-item label {
+    flex: 1;
+    font-weight: normal;
+  }
+  
+  .subarticulo-item input {
+    width: 80px;
+  }
+  
+
 /*BOTONES*/
 button {
     padding: 10px;

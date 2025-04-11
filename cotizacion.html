@@ -25,9 +25,9 @@
 
     <main class="form-container">
         <section class="cotizacion">
-            <form class="cotizacionform">
+            <form id="cotizacion-form" class="cotizacionform">
+
                 <h3>Cotización</h3>
-                <form id="cotizacion-form" class="cotizacionform">
 
                     <!-- Fechas y direcciones -->
                     <div class="grupo-campos">
@@ -110,12 +110,8 @@
                         <button type="reset" class="limpiar">Limpiar</button>
                         <button type="button" onclick="generarPDF()">PDF</button>
                     </div>
-                </form>
-    </main>
-
-    </form>
-    </section>
-
+            </form>
+        </section>
     </main>
 
 
@@ -124,6 +120,8 @@
         <p>&copy; 2025 SEGHER</p>
     </footer>
 
+
+    <script src="cotizacion.js"></script>
 </body>
 
 </html>
