@@ -21,10 +21,79 @@
                 </ul>
             </nav>
         </header>
-    
-    <main>
 
-    </main>
+        <main class="form-container">
+            <section class="buscar">
+              <form id="buscar-form" class="buscar-formulario">
+                <h3>Buscar</h3>
+          
+                <!-- Tipo de búsqueda -->
+                <div class="grupo-busqueda">
+                  <label for="tipo-busqueda">Tipo de Búsqueda:</label>
+                  <select id="tipo-busqueda" name="tipo_busqueda" required>
+                    <option value="">Seleccione</option>
+                    <option value="codigo">Código de Atención</option>
+                    <option value="dni">DNI</option>
+                    <option value="ruc">RUC</option>
+                    <option value="ce">CE</option>
+                    <option value="nombre">Nombre / Razón Social</option>
+                  </select>
+          
+                  <label for="dato-busqueda">Ingrese dato:</label>
+                  <input type="text" id="dato-busqueda" name="dato_busqueda" placeholder="Ej: 12345678" required>
+                </div>
+          
+                <!-- Datos del cliente -->
+                <h4>Datos del Cliente</h4>
+                <div class="datos-cliente">
+                  <p><strong>Código de Atención:</strong> <span id="codigo-cliente"></span></p>
+                  <p><strong>Nombre / Razón Social:</strong> <span id="nombre-cliente"></span></p>
+                  <p><strong>Tipo de Documento:</strong> <span id="tipo-documento"></span></p>
+                  <p><strong>N° de Documento:</strong> <span id="numero-documento"></span></p>
+                </div>
+          
+                <!-- Datos del servicio -->
+                <h4>Datos del Servicio</h4>
+                <div class="datos-servicio">
+                  <p><strong>Dirección Origen:</strong> <span id="direccion-origen"></span></p>
+                  <p><strong>Dirección Destino:</strong> <span id="direccion-destino"></span></p>
+                  <p><strong>Fecha Inicio:</strong> <span id="fecha-inicio"></span></p>
+                  <p><strong>Fecha Fin:</strong> <span id="fecha-fin"></span></p>
+                </div>
+          
+                <!-- Resumen de artículos -->
+                <h4>Resumen de Artículos</h4>
+                <div id="resumen-articulos-busqueda">
+                  <!-- Aquí se listan los artículos seleccionados con cantidades -->
+                </div>
+          
+                <!-- Costo del servicio -->
+                <h4>Costo del Servicio</h4>
+                <div class="costos-servicio">
+                  <p><strong>Subtotal:</strong> S/ <span id="subtotal"></span></p>
+                  <p><strong>IGV:</strong> S/ <span id="igv"></span></p>
+                  <p><strong>Total:</strong> S/ <span id="total"></span></p>
+                </div>
+          
+                <!-- QR de pago -->
+                <div class="qr-pago">
+                  <p><strong>QR de Pago:</strong></p>
+                  <img id="qr-imagen" src="ruta_del_qr.png" alt="QR de pago" width="150">
+                </div>
+          
+                <!-- Botones -->
+                <div class="botones">
+                  <button type="button" onclick="imprimirBusqueda()">Imprimir</button>
+                  <button type="button" onclick="generarPDFBusqueda()">PDF</button>
+                </div>
+              </form>
+            </section>
+          </main>
+              
+    
+
+
+
 
     <footer>
         <p>&copy; 2025 SEGHER</p>
