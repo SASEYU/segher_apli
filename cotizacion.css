@@ -88,6 +88,40 @@ select {
   .subarticulo-item input {
     width: 80px;
   }
+
+
+
+  .grupo-campos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .grupo-campos label,
+  .grupo-campos input {
+    width: calc(50% - 10px);
+  }
+  
+  .grupo-campos input[type="number"][name="kilometraje"],
+  .grupo-campos label:nth-of-type(5) {
+    width: 100%;
+  }
+  
+  /* Resumen de artículos en columnas ordenadas */
+  #resumen-articulos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+    margin-top: 10px;
+  }
+  
+  #resumen-articulos p {
+    margin: 0;
+    padding: 4px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+  }
+  
   
 
 /*BOTONES*/
