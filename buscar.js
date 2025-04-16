@@ -16,3 +16,13 @@ function generarPDFBusqueda() {
         html2pdf().set(opciones).from(elemento).save();
     }, 500); // espera 500 ms
 }
+
+//Salir del programa
+function cerrarSesion() {
+    // Limpiar cualquier almacenamiento (si estás usando)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Redirigir a la página de inicio o login
+    window.location.href = "index.html"; // o "login.html"
+}

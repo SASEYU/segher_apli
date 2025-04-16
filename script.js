@@ -1,18 +1,19 @@
+
 document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-  
-    const usuario = document.getElementById("username").value;
-    const clave = document.getElementById("password").value;
-  
-    // Aquí puedes validar con tus datos reales o simular
-    if (usuario === "admin" && clave === "1234") {
+  e.preventDefault();
+
+  const usuario = document.getElementById("username").value;
+  const clave = document.getElementById("password").value;
+
+  if (usuario === "admin" && clave === "1234") {
       alert("Login exitoso 🎉");
-      // Redirigir, guardar token, etc.
-    } else {
+      sessionStorage.setItem("usuario", usuario); // Guarda la sesión
+      window.location.href = "registro.html"; // Redirige al programa
+  } else {
       alert("Usuario o contraseña incorrectos ❌");
-    }
-  });
-  
+  }
+});
+
 
 
 
@@ -55,5 +56,13 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
   });
 
 
+//Salir del programa
+function cerrarSesion() {
+  // Limpiar cualquier almacenamiento (si estás usando)
+  localStorage.clear();
+  sessionStorage.clear();
 
+  // Redirigir a la página de inicio o login
+  window.location.href = "index.html"; // o "login.html"
+}
 

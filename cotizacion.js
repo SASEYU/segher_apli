@@ -90,3 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+//Salir del programa
+function cerrarSesion() {
+    // Limpiar cualquier almacenamiento (si estás usando)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Redirigir a la página de inicio o login
+    window.location.href = "index.html"; // o "login.html"
+}
