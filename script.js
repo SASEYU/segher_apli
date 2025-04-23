@@ -6,7 +6,6 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
   const clave = document.getElementById("password").value;
 
   if (usuario === "admin" && clave === "1234") {
-      alert("Login exitoso 🎉");
       sessionStorage.setItem("usuario", usuario); // Guarda la sesión
       window.location.href = "registro.html"; // Redirige al programa
   } else {

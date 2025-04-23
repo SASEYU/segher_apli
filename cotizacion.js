@@ -99,5 +99,13 @@ function cerrarSesion() {
     sessionStorage.clear();
 
     // Redirigir a la página de inicio o login
-    window.location.href = "index.html"; // o "login.html"
+    window.location.replace("index.html")
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const usuario = sessionStorage.getItem("usuario");
+    if (!usuario) {
+        window.location.replace("index.html"); // también reemplaza el historial
+    }
+});

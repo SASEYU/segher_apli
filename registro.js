@@ -7,3 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "index.html"; // O la página de login
     }
 });
+
+
+//Salir del programa
+function cerrarSesion() {
+    // Limpiar cualquier almacenamiento (si estás usando)
+    localStorage.clear();
+    sessionStorage.clear();
+  
+    // Redirigir a la página de inicio o login
+    window.location.href = "index.html"; // o "login.html"
+  }
+  
