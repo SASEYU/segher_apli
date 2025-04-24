@@ -44,7 +44,11 @@
                         <input type="text" name="direccion_destino" required>
 
                         <label>Kilometraje:</label>
-                        <input type="number" name="kilometraje" min="0" required>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="number" name="kilometraje" id="kilometraje" min="0" required>
+                            <button class="maps" type="button" onclick="abrirGoogleMaps()">Google Maps</button>
+                        </div>
+                        <!--<input type="number" name="kilometraje" min="0" required>-->
                     </div>
 
                     <!-- Artículos -->
@@ -88,6 +92,12 @@
                             <option value="no">No</option>
                             <option value="si">Sí</option>
                         </select>
+                        <input type="number" name="cantidad_embalajes" placeholder="Cantidad" min="0">
+
+                        <label>Pisos:</label>
+                        <input type="number" name="cantidad_pisos" placeholder="Cantidad" min="0">
+
+
                     </div>
 
                     <!-- Costo del Servicio -->
@@ -96,8 +106,8 @@
                         <label>Subtotal:</label>
                         <input type="number" name="subtotal" step="0.01" min="0">
 
-                        <label>Margen de Ganancia (%):</label>
-                        <input type="number" name="margen_ganancia" step="0.01" min="0">
+                        <!--<label>Margen de Ganancia (%):</label>
+                        <input type="number" name="margen_ganancia" step="0.01" min="0">-->
 
                         <label>IGV (%):</label>
                         <input type="number" name="igv" step="0.01" min="0">

@@ -152,13 +152,45 @@ button[type="submit"]:hover {
     background-color: #063f8f;
 }
 
-button.limpiar {
+button.limpiar, .maps {
     background-color: #e0e0e0;
 }
 
-button.limpiar:hover {
+button.limpiar, .maps:hover {
     background-color: #c2c2c2;
 }
+
+
+.opciones-extra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+}
+
+.opciones-extra label {
+    grid-column: span 2;
+    font-weight: bold;
+}
+
+.opciones-extra input,
+.opciones-extra select {
+    width: 100%;
+}
+
+
+
+
+.grupo-costos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.grupo-costos label,
+.grupo-costos input {
+    width: calc(50% - 10px);
+}
+
 
 
 /*FOOTER*/

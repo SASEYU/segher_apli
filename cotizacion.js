@@ -109,3 +109,17 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.replace("index.html"); // también reemplaza el historial
     }
 });
+
+//google.maps
+function abrirGoogleMaps() {
+    const origen = document.querySelector('input[name="direccion_origen"]').value;
+    const destino = document.querySelector('input[name="direccion_destino"]').value;
+
+    if (!origen || !destino) {
+        alert("Por favor, completa la dirección de origen y destino.");
+        return;
+    }
+
+    const url = `https://www.google.com/maps/dir/${encodeURIComponent(origen)}/${encodeURIComponent(destino)}`;
+    window.open(url, '_blank');
+}
