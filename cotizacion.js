@@ -123,3 +123,53 @@ function abrirGoogleMaps() {
     const url = `https://www.google.com/maps/dir/${encodeURIComponent(origen)}/${encodeURIComponent(destino)}`;
     window.open(url, '_blank');
 }
+
+//calculo de costo
+document.addEventListener('DOMContentLoaded', function () {
+    const kilometrajeInput = document.querySelector('input[name="kilometraje"]');
+    const ayudantesInput = document.querySelector('input[name="cantidad_ayudantes"]');
+    const embalajesInput = document.querySelector('input[name="cantidad_embalajes"]');
+    const pisosInput = document.querySelector('input[name="cantidad_pisos"]');
+
+    const subtotalInput = document.querySelector('input[name="subtotal"]');
+    const igvInput = document.querySelector('input[name="igv"]');
+    const totalInput = document.querySelector('input[name="total"]');
+
+    function calcularCosto() {
+        const km = parseFloat(kilometrajeInput.value) || 0;
+        const ayudantes = parseInt(ayudantesInput.value) || 0;
+        const embalajes = parseInt(embalajesInput.value) || 0;
+        const pisos = parseInt(pisosInput.value) || 0;
+
+        // Cálculo transporte
+        let transporte = 0;
+        if (km <= 5) {
+            transporte = 85;
+        } else {
+            transporte = 85 + (km - 5) * 3.5;
+        }
+
+        // Aplicar 35% de ganancia
+        const transporteConGanancia = transporte * 1.35;
+
+        // Suma de extras
+        const ayudanteCosto = ayudantes * 40;
+        const embalajeCosto = embalajes * 15;
+        const pisoCosto = pisos * 20;
+
+        const subtotal = transporteConGanancia + ayudanteCosto + embalajeCosto + pisoCosto;
+
+        const igv = subtotal * 0.18;
+        const total = subtotal + igv;
+
+        // Mostrar resultados
+        subtotalInput.value = subtotal.toFixed(2);
+        igvInput.value = igv.toFixed(2);
+        totalInput.value = total.toFixed(2);
+    }
+
+    // Ejecutar al cambiar los campos relevantes
+    [kilometrajeInput, ayudantesInput, embalajesInput, pisosInput].forEach(input => {
+        input.addEventListener('input', calcularCosto);
+    });
+});
