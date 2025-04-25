@@ -1,5 +1,5 @@
 
-
+//Agregar articulos en el formulario Cotización
 document.addEventListener("DOMContentLoaded", function () {
     const articulos = {
         cocina: ["Cocina", "Horno microondas", "Horno eléctrico", "Refrigerador", "Alacena", "Platos", "Cubiertos", "Vasos", "Ollas"],
@@ -172,4 +172,16 @@ document.addEventListener('DOMContentLoaded', function () {
     [kilometrajeInput, ayudantesInput, embalajesInput, pisosInput].forEach(input => {
         input.addEventListener('input', calcularCosto);
     });
+});
+
+//Recepción de datos del formulario Registro para PDF
+window.addEventListener('DOMContentLoaded', () => {
+    const datosCliente = JSON.parse(localStorage.getItem('datosCliente'));
+
+    if (datosCliente) {
+        document.getElementById('cliente-nombre').textContent = datosCliente.nombre || '';
+        document.getElementById('cliente-dni').textContent = datosCliente.numeroDocumento || '';
+        document.getElementById('cliente-telefono').textContent = datosCliente.telefono || '';
+        document.getElementById('cliente-direccion').textContent = datosCliente.direccion || '';
+    }
 });

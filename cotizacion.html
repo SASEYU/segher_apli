@@ -29,102 +29,110 @@
 
                 <h3>Cotización</h3>
 
-                    <!-- Fechas y direcciones -->
-                    <div class="grupo-campos">
-                        <label>Fecha/Hora Inicio:</label>
-                        <input type="datetime-local" name="fecha_inicio" required>
+                <h4>Datos del Cliente</h4>
+                <div class="datos-cliente">
+                    <p><strong>Nombre:</strong> <span id="cliente-nombre"></span></p>
+                    <p><strong>DNI:</strong> <span id="cliente-dni"></span></p>
+                    <p><strong>Teléfono:</strong> <span id="cliente-telefono"></span></p>
+                    <p><strong>Dirección:</strong> <span id="cliente-direccion"></span></p>
+                </div>
 
-                        <label>Fecha/Hora Fin:</label>
-                        <input type="datetime-local" name="fecha_fin" required>
+                <!-- Fechas y direcciones -->
+                <div class="grupo-campos">
+                    <label>Fecha/Hora Inicio:</label>
+                    <input type="datetime-local" name="fecha_inicio" required>
 
-                        <label>Dirección Origen:</label>
-                        <input type="text" name="direccion_origen" required>
+                    <label>Fecha/Hora Fin:</label>
+                    <input type="datetime-local" name="fecha_fin" required>
 
-                        <label>Dirección Destino:</label>
-                        <input type="text" name="direccion_destino" required>
+                    <label>Dirección Origen:</label>
+                    <input type="text" name="direccion_origen" required>
 
-                        <label>Kilometraje:</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="number" name="kilometraje" id="kilometraje" min="0" required>
-                            <button class="maps" type="button" onclick="abrirGoogleMaps()">Google Maps</button>
-                        </div>
-                        <!--<input type="number" name="kilometraje" min="0" required>-->
+                    <label>Dirección Destino:</label>
+                    <input type="text" name="direccion_destino" required>
+
+                    <label>Kilometraje:</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="number" name="kilometraje" id="kilometraje" min="0" required>
+                        <button class="maps" type="button" onclick="abrirGoogleMaps()">Google Maps</button>
                     </div>
+                    <!--<input type="number" name="kilometraje" min="0" required>-->
+                </div>
 
-                    <!-- Artículos -->
-                    <h4>Artículos</h4>
-                    <div class="grupo-articulos">
-                        <label>Sección:</label>
-                        <select id="seccion" name="seccion">
-                            <option value="">Seleccione una sección</option>
-                            <option value="cocina">Cocina</option>
-                            <option value="sala">Sala/Comedor</option>
-                            <option value="dormitorio">Dormitorio</option>
-                            <option value="lavanderia">Lavandería</option>
-                            <option value="oficina">Oficina</option>
-                        </select>
+                <!-- Artículos -->
+                <h4>Artículos</h4>
+                <div class="grupo-articulos">
+                    <label>Sección:</label>
+                    <select id="seccion" name="seccion">
+                        <option value="">Seleccione una sección</option>
+                        <option value="cocina">Cocina</option>
+                        <option value="sala">Sala/Comedor</option>
+                        <option value="dormitorio">Dormitorio</option>
+                        <option value="lavanderia">Lavandería</option>
+                        <option value="oficina">Oficina</option>
+                    </select>
 
-                        <div id="subarticulos-container">
-                            <!-- Aquí se insertarán los submenús dinámicamente -->
-                        </div>
+                    <div id="subarticulos-container">
+                        <!-- Aquí se insertarán los submenús dinámicamente -->
                     </div>
+                </div>
 
-                    <h4>Resumen de Artículos</h4>
-                    <div id="resumen-articulos">
+                <h4>Resumen de Artículos</h4>
+                <div id="resumen-articulos">
                     <!-- Aquí se mostrarán los artículos con cantidad -->
-                    </div>
+                </div>
 
-                    <!-- Observaciones -->
-                    <label>Observaciones:</label>
-                    <textarea name="observaciones" rows="4"></textarea>
+                <!-- Observaciones -->
+                <label>Observaciones:</label>
+                <textarea name="observaciones" rows="4"></textarea>
 
-                    <!-- Ayudante y Embalaje -->
-                    <div class="opciones-extra">
-                        <label>Ayudante:</label>
-                        <!--<select name="ayudante" id="ayudante">
+                <!-- Ayudante y Embalaje -->
+                <div class="opciones-extra">
+                    <label>Ayudante:</label>
+                    <!--<select name="ayudante" id="ayudante">
                             <option value="no">No</option>
                             <option value="si">Sí</option>
                         </select>-->
-                        <input type="number" name="cantidad_ayudantes" placeholder="Cantidad" min="0">
+                    <input type="number" name="cantidad_ayudantes" placeholder="Cantidad" min="0">
 
-                        <label>Embalaje:</label>
-                        <!--<select name="embalaje">
+                    <label>Embalaje:</label>
+                    <!--<select name="embalaje">
                             <option value="no">No</option>
                             <option value="si">Sí</option>
                         </select>-->
-                        <input type="number" name="cantidad_embalajes" placeholder="Cantidad" min="0">
+                    <input type="number" name="cantidad_embalajes" placeholder="Cantidad" min="0">
 
-                        <label>Pisos:</label>
-                        <input type="number" name="cantidad_pisos" placeholder="Cantidad" min="0">
+                    <label>Pisos:</label>
+                    <input type="number" name="cantidad_pisos" placeholder="Cantidad" min="0">
 
 
-                    </div>
+                </div>
 
-                    <!-- Costo del Servicio -->
-                    <h4>Costo del Servicio</h4>
-                    <div class="grupo-costos">
-                        <label>Subtotal:</label>
-                        <input type="number" name="subtotal" step="0.01" min="0">
+                <!-- Costo del Servicio -->
+                <h4>Costo del Servicio</h4>
+                <div class="grupo-costos">
+                    <label>Subtotal:</label>
+                    <input type="number" name="subtotal" step="0.01" min="0">
 
-                        <!--<label>Margen de Ganancia (%):</label>
+                    <!--<label>Margen de Ganancia (%):</label>
                         <input type="number" name="margen_ganancia" step="0.01" min="0">-->
 
-                        <label>IGV (%):</label>
-                        <input type="number" name="igv" step="0.01" min="0">
+                    <label>IGV (%):</label>
+                    <input type="number" name="igv" step="0.01" min="0">
 
-                        <label>Total:</label>
-                        <input type="number" name="total" step="0.01" min="0">
+                    <label>Total:</label>
+                    <input type="number" name="total" step="0.01" min="0">
 
-                        <label>Código de Atención:</label>
-                        <input type="text" name="codigo_atencion">
-                    </div>
+                    <label>Código de Atención:</label>
+                    <input type="text" name="codigo_atencion">
+                </div>
 
-                    <!-- Botones -->
-                    <div class="botones">
-                        <button type="submit">Guardar</button>
-                        <button type="reset" class="limpiar">Limpiar</button>
-                        <button type="button" onclick="generarPDF()">PDF</button>
-                    </div>
+                <!-- Botones -->
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="reset" class="limpiar">Limpiar</button>
+                    <button type="button" onclick="generarPDF()">PDF</button>
+                </div>
             </form>
         </section>
     </main>
