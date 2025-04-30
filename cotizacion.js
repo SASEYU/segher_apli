@@ -213,16 +213,18 @@ document.getElementById('cotizacion-form').addEventListener('submit', function (
     const resumenArticulos = document.getElementById('resumen-articulos').innerText || 'Sin artículos registrados.';
 
     // Crear PDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    /*const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();*/
+    const generatePDF = () => {
+        const doc = new jsPDF();
 
-    // Insertar logo si está disponible
-    const logo = new Image();
-    logo.src = 'imagenes/segher-logo.png';
-    logo.onload = function () {
-        doc.addImage(logo, 'PNG', 10, 10, 40, 20);
-        generarContenidoPDF(doc);
-    };
+        
+
+
+ // Aquí va tu base64 completo
+doc.addImage(logoBase64, 'PNG', 10, 10, 40, 20);
+generarContenidoPDF(doc);
+
     logo.onerror = function () {
         console.warn('No se pudo cargar el logo. Se generará el PDF sin logo.');
         generarContenidoPDF(doc); // Igual genera el contenido sin logo
