@@ -1,6 +1,11 @@
 
 //Agregar articulos en el formulario Cotización
 document.addEventListener("DOMContentLoaded", function () {
+    // Validación de usuario (movido desde el segundo DOMContentLoaded)
+    const usuario = sessionStorage.getItem("usuario");
+    if (!usuario) {
+        window.location.replace("index.html");
+    }
     const articulos = {
         cocina: ["Cocina", "Horno microondas", "Horno eléctrico", "Refrigerador", "Alacena", "Platos", "Cubiertos", "Vasos", "Ollas"],
         sala: ["Sofá 1 cuerpo", "Sofá 2 cuerpos", "Sofá 3 cuerpos", "Mesa centro", "Mesa comedor", "Silla comedor", "Vitrina", "Puff"],
@@ -12,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const seccionSelect = document.getElementById("seccion");
     const contenedor = document.getElementById("subarticulos-container");
     const resumen = document.getElementById("resumen-articulos");
+    const articulosSeleccionados = {};
 
     // Nuevo objeto para almacenar los artículos seleccionados globalmente
-    const articulosSeleccionados = {};
 
     seccionSelect.addEventListener("change", function () {
         const seleccion = this.value;
@@ -177,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //Recepción de datos del formulario Registro para PDF
 window.addEventListener('DOMContentLoaded', () => {
     const datosCliente = JSON.parse(localStorage.getItem('datosCliente'));
-
     if (datosCliente) {
         document.getElementById('cliente-nombre').textContent = datosCliente.nombre || '';
         document.getElementById('cliente-dni').textContent = datosCliente.numeroDocumento || '';
@@ -186,6 +190,222 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validar campos obligatorios
+    const requiredFields = ['fecha_inicio', 'fecha_fin', 'direccion_origen', 'direccion_destino', 'kilometraje'];
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+        const value = document.querySelector(`[name="${field}"]`).value;
+        if (!value) {
+            alert(`Por favor complete el campo: ${field.replace('_', ' ')}`);
+            isValid = false;
+        }
+    });
+    
+    if (!isValid) return;
+
+    // Obtener el logo del HTML (corregir el ID primero)
+    const logoImg = document.getElementById('logo-img');
+    if (!logoImg) {
+        console.error('No se encontró el logo en el HTML');
+        return;
+    }
+    
+    // Cambiar el ID para evitar el typo en futuras ejecuciones
+    logoImg.id = 'logo-img';
+    
+
+    // Datos del cliente
+    const nombre = document.getElementById('cliente-nombre').textContent;
+    const dni = document.getElementById('cliente-dni').textContent;
+    const telefono = document.getElementById('cliente-telefono').textContent;
+    const direccion = document.getElementById('cliente-direccion').textContent;
+
+    // Datos del formulario
+    const fechaInicio = document.querySelector('[name="fecha_inicio"]').value;
+    const fechaFin = document.querySelector('[name="fecha_fin"]').value;
+    const origen = document.querySelector('[name="direccion_origen"]').value;
+    const destino = document.querySelector('[name="direccion_destino"]').value;
+    const kilometraje = document.querySelector('[name="kilometraje"]').value;
+    const ayudantes = document.querySelector('[name="cantidad_ayudantes"]').value || '0';
+    const embalajes = document.querySelector('[name="cantidad_embalajes"]').value || '0';
+    const pisos = document.querySelector('[name="cantidad_pisos"]').value || '0';
+    const subtotal = document.querySelector('[name="subtotal"]').value;
+    const igv = document.querySelector('[name="igv"]').value;
+    const total = document.querySelector('[name="total"]').value;
+    const codigo = document.querySelector('[name="codigo_atencion"]').value;
+    const observaciones = document.querySelector('[name="observaciones"]').value || 'Sin observaciones';
+
+    // Obtener artículos seleccionados
+    const articulosSeleccionados = [];
+    document.querySelectorAll('#subarticulos-container input[type="number"]').forEach(input => {
+        if (input.value > 0) {
+            const nombre = input.name.replace('cantidad_', '').replace(/_/g, ' ');
+            articulosSeleccionados.push({
+                nombre: nombre.charAt(0).toUpperCase() + nombre.slice(1),
+                cantidad: input.value
+            });
+        }
+    });
+
+    // Crear PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Configuración de estilos
+    const primaryColor = '#2c3e50';
+    const secondaryColor = '#3498db';
+    doc.setFont('helvetica');
+    
+    // Logo y encabezado
+    // Usa directamente el elemento img del DOM
+    doc.addImage(logoImg, 'PNG', 15, 10, 30, 15);
+    doc.setFontSize(18);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('COTIZACIÓN DE SERVICIO', 105, 20, { align: 'center' });
+    
+    // Información de la empresa
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.setFont(undefined, 'normal');
+    doc.text('Empresa: Transportes y Mudanzas Ejemplo S.A.C.', 15, 30);
+    doc.text('RUC: 12345678901', 15, 35);
+    doc.text('Teléfono: (01) 123-4567', 15, 40);
+    doc.text('Email: contacto@empresa.com', 15, 45);
+    
+    // Datos del cliente
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('DATOS DEL CLIENTE', 15, 55);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    doc.text(`Nombre: ${nombre}`, 15, 60);
+    doc.text(`DNI/RUC: ${dni}`, 15, 65);
+    doc.text(`Teléfono: ${telefono}`, 15, 70);
+    doc.text(`Dirección: ${direccion}`, 15, 75);
+    
+    // Detalles del servicio
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('DETALLES DEL SERVICIO', 15, 85);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    doc.text(`Fecha de inicio: ${fechaInicio}`, 15, 90);
+    doc.text(`Fecha de fin: ${fechaFin}`, 15, 95);
+    doc.text(`Dirección origen: ${origen}`, 15, 100);
+    doc.text(`Dirección destino: ${destino}`, 15, 105);
+    doc.text(`Kilometraje estimado: ${kilometraje} km`, 15, 110);
+    
+    // Artículos (tabla)
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('ARTÍCULOS A TRANSPORTAR', 15, 120);
+    
+    // Crear tabla de artículos
+    let y = 125;
+    if (articulosSeleccionados.length > 0) {
+        // Encabezado de tabla
+        doc.setFillColor(secondaryColor);
+        doc.setTextColor(255);
+        doc.rect(15, y, 180, 8, 'F');
+        doc.text('Artículo', 17, y + 6);
+        doc.text('Cantidad', 160, y + 6, { align: 'right' });
+        y += 8;
+        
+        // Filas de artículos
+        doc.setTextColor(0);
+        articulosSeleccionados.forEach(articulo => {
+            doc.text(articulo.nombre, 17, y + 6);
+            doc.text(articulo.cantidad.toString(), 160, y + 6, { align: 'right' });
+            y += 8;
+        });
+    } else {
+        doc.text('No se han seleccionado artículos', 15, y + 6);
+        y += 8;
+    }
+    
+    // Detalles adicionales del servicio
+    y += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('DETALLES ADICIONALES', 15, y);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    y += 8;
+    doc.text(`Ayudantes: ${ayudantes}`, 15, y);
+    y += 6;
+    doc.text(`Embalajes: ${embalajes}`, 15, y);
+    y += 6;
+    doc.text(`Pisos: ${pisos}`, 15, y);
+    y += 10;
+    
+    // Observaciones
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('OBSERVACIONES', 15, y);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    y += 8;
+    const splitObservaciones = doc.splitTextToSize(observaciones, 180);
+    doc.text(splitObservaciones, 15, y);
+    y += splitObservaciones.length * 6 + 10;
+    
+    // Costos
+    doc.setFontSize(12);
+    doc.setTextColor(primaryColor);
+    doc.setFont(undefined, 'bold');
+    doc.text('DETALLE DE COSTOS', 15, y);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    y += 10;
+    doc.text('Subtotal:', 120, y, { align: 'right' });
+    doc.text(`S/. ${parseFloat(subtotal).toFixed(2)}`, 180, y, { align: 'right' });
+    y += 8;
+    doc.text('IGV (18%):', 120, y, { align: 'right' });
+    doc.text(`S/. ${parseFloat(igv).toFixed(2)}`, 180, y, { align: 'right' });
+    y += 8;
+    doc.setFont(undefined, 'bold');
+    doc.text('TOTAL:', 120, y, { align: 'right' });
+    doc.text(`S/. ${parseFloat(total).toFixed(2)}`, 180, y, { align: 'right' });
+    y += 15;
+    
+    // Código y firma
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Código de atención: ${codigo || 'N/A'}`, 15, y);
+    y += 20;
+    doc.text('_________________________', 15, y);
+    doc.text('Firma del cliente', 15, y + 5);
+    doc.text('_________________________', 120, y);
+    doc.text('Firma del representante', 120, y + 5);
+    
+    // Pie de página
+    doc.setFontSize(8);
+    doc.setTextColor(100);
+    doc.text('Gracias por preferir nuestros servicios', 105, 280, { align: 'center' });
+    doc.text('Este documento es válido por 7 días a partir de la fecha de emisión', 105, 285, { align: 'center' });
+    
+    // Guardar PDF
+    const fileName = `Cotización_${nombre.replace(/\s+/g, '_')}_${fechaInicio.split('T')[0]}.pdf`;
+    doc.save(fileName);
+    alert('Cotización generada exitosamente');
+
+});
 
 
 
