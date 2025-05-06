@@ -1,4 +1,21 @@
 
+// Cierre automático de datetime pickers
+function setupDateTimePickers() {
+    const fechaInicio = document.querySelector('input[name="fecha_inicio"]');
+    const fechaFin = document.querySelector('input[name="fecha_fin"]');
+    
+    if (fechaInicio && fechaFin) {
+        fechaInicio.addEventListener('input', function() {
+            if (this.value) this.blur();
+        });
+        
+        fechaFin.addEventListener('input', function() {
+            if (this.value) this.blur();
+        });
+    }
+}
+
+
 //Agregar articulos en el formulario Cotización
 document.addEventListener("DOMContentLoaded", function () {
     // Validación de usuario (movido desde el segundo DOMContentLoaded)
@@ -6,6 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!usuario) {
         window.location.replace("index.html");
     }
+
+     // Configurar los datetime pickers
+        setupDateTimePickers();
+
     const articulos = {
         cocina: ["Cocina", "Horno microondas", "Horno eléctrico", "Refrigerador", "Alacena", "Platos", "Cubiertos", "Vasos", "Ollas"],
         sala: ["Sofá 1 cuerpo", "Sofá 2 cuerpos", "Sofá 3 cuerpos", "Mesa centro", "Mesa comedor", "Silla comedor", "Vitrina", "Puff"],
@@ -96,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
 //Salir del programa
 function cerrarSesion() {
     // Limpiar cualquier almacenamiento (si estás usando)
@@ -106,14 +126,6 @@ function cerrarSesion() {
     // Redirigir a la página de inicio o login
     window.location.replace("index.html")
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const usuario = sessionStorage.getItem("usuario");
-    if (!usuario) {
-        window.location.replace("index.html"); // también reemplaza el historial
-    }
-});
 
 //google.maps
 function abrirGoogleMaps() {
@@ -193,6 +205,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
     e.preventDefault();
+
+    // Generar código de atención automático (nuevo código)
+    const codigoAtencion = 'SH-' + Math.floor(10000 + Math.random() * 90000);
+    document.querySelector('[name="codigo_atencion"]').value = codigoAtencion;
     
     // Validar campos obligatorios
     const requiredFields = ['fecha_inicio', 'fecha_fin', 'direccion_origen', 'direccion_destino', 'kilometraje'];
@@ -254,13 +270,60 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
 
     // Crear PDF
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+        unit: 'mm',
+        compress: true
+    });
+
+    // Al inicio del documento, después de crear el PDF:
+    doc.setProperties({
+    title: `Cotización ${codigoAtencion}`,
+    subject: 'Cotización de Servicio',
+    author: 'SEGHER EXPRESS PERU S.A.C.',
+    keywords: 'cotización, mudanza, transporte',
+    creator: 'Sistema de Cotizaciones SEGHER'
+});
     
+    // Configuración base de fuentes
+doc.setFont('helvetica');
+doc.setFontSize(8); // Tamaño base más pequeño
+
     // Configuración de estilos
     const primaryColor = '#2c3e50';
     const secondaryColor = '#3498db';
     doc.setFont('helvetica');
     
+    // Estilo para títulos de sección
+    const estiloTitulo = {
+    fontSize: 10,
+    textColor: '#2c3e50',
+    fontStyle: 'bold'
+};
+
+// Estilo para contenido
+const estiloNormal = {
+    fontSize: 8,
+    textColor: '#000000'
+};
+
+// Función para agregar secciones con bordes
+function agregarSeccion(doc, titulo, y) {
+    doc.setDrawColor(200, 200, 200); // Color gris claro
+    doc.setLineWidth(0.5);
+    doc.rect(15, y - 5, 180, 10); // Rectángulo del título
+    
+    // Estilo título de sección
+    doc.setFontSize(10);
+    doc.setTextColor(45, 45, 45);
+    doc.setFont(undefined, 'bold');
+    doc.text(titulo, 20, y);
+    
+    return y + 8; // Retorna nueva posición Y
+}
+
+// Ejemplo de uso en tu código:
+y = agregarSeccion(doc, 'DATOS DEL CLIENTE', 55);
+
     // Logo y encabezado
     // Usa directamente el elemento img del DOM
     doc.addImage(logoImg, 'PNG', 15, 10, 30, 15);
@@ -315,19 +378,24 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     let y = 125;
     if (articulosSeleccionados.length > 0) {
         // Encabezado de tabla
-        doc.setFillColor(secondaryColor);
+        doc.setFillColor(70, 130, 180);
         doc.setTextColor(255);
-        doc.rect(15, y, 180, 8, 'F');
-        doc.text('Artículo', 17, y + 6);
-        doc.text('Cantidad', 160, y + 6, { align: 'right' });
-        y += 8;
+        doc.rect(15, y, 180, 6, 'F');
+        doc.text('Artículo', 17, y + 4);
+        doc.text('Cantidad', 160, y + 4, { align: 'right' });
+        y += 6;
         
         // Filas de artículos
-        doc.setTextColor(0);
-        articulosSeleccionados.forEach(articulo => {
-            doc.text(articulo.nombre, 17, y + 6);
-            doc.text(articulo.cantidad.toString(), 160, y + 6, { align: 'right' });
-            y += 8;
+        articulosSeleccionados.forEach((articulo, index) => {
+            if(index % 2 === 0) {
+                doc.setFillColor(240, 240, 240); // Fondo gris claro para filas pares
+                doc.rect(15, y, 180, 5, 'F');
+            }
+
+            doc.setTextColor(0);
+            doc.text(articulo.nombre, 17, y + 4);
+            doc.text(articulo.cantidad.toString(), 160, y + 4, { align: 'right' });
+            y += 5;
         });
     } else {
         doc.text('No se han seleccionado artículos', 15, y + 6);
@@ -360,9 +428,14 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     doc.setFontSize(10);
     doc.setTextColor(0);
     y += 8;
-    const splitObservaciones = doc.splitTextToSize(observaciones, 180);
-    doc.text(splitObservaciones, 15, y);
-    y += splitObservaciones.length * 6 + 10;
+    const splitObservaciones = doc.splitTextToSize(observaciones, 170);
+    const alturaObservaciones = splitObservaciones.length * 3.5;
+
+    // Cuadro contenedor
+doc.setDrawColor(200);
+doc.rect(15, y, 180, alturaObservaciones + 4);
+    doc.text(splitObservaciones, 20, y + 4);
+    y += alturaObservaciones + 8;
     
     // Costos
     doc.setFontSize(12);
@@ -389,12 +462,18 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     doc.setFont(undefined, 'normal');
     doc.text(`Código de atención: ${codigo || 'N/A'}`, 15, y);
     y += 20;
-    doc.text('_________________________', 15, y);
-    doc.text('Firma del cliente', 15, y + 5);
-    doc.text('_________________________', 120, y);
-    doc.text('Firma del representante', 120, y + 5);
     
-    // Pie de página
+    // Líneas de firma más elegantes
+doc.setLineWidth(0.3);
+doc.setDrawColor(150);
+doc.line(15, y, 75, y); // Línea cliente
+doc.line(120, y, 180, y); // Línea representante
+
+doc.setFontSize(7);
+doc.text('Firma del cliente', 15, y + 4);
+doc.text('Firma del representante', 120, y + 4);
+
+// Pie de página
     doc.setFontSize(8);
     doc.setTextColor(100);
     doc.text('Gracias por preferir nuestros servicios', 105, 280, { align: 'center' });
@@ -404,7 +483,12 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     const fileName = `Cotización_${nombre.replace(/\s+/g, '_')}_${fechaInicio.split('T')[0]}.pdf`;
     doc.save(fileName);
     alert('Cotización generada exitosamente');
+});
 
+// Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    setupDateTimePickers();
+    // ... (otras inicializaciones que ya tengas)
 });
 
 
