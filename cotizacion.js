@@ -273,10 +273,10 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     doc.setFontSize(10);
     doc.setTextColor(100);
     doc.setFont(undefined, 'normal');
-    doc.text('Empresa: Transportes y Mudanzas Ejemplo S.A.C.', 15, 30);
-    doc.text('RUC: 12345678901', 15, 35);
-    doc.text('Teléfono: (01) 123-4567', 15, 40);
-    doc.text('Email: contacto@empresa.com', 15, 45);
+    doc.text('Empresa: SEGHER EXPRESS PERU S.A.C.', 15, 30);
+    doc.text('RUC: 20613399411', 15, 35);
+    doc.text('Teléfono: 923223259', 15, 40);
+    doc.text('Email: contacto@shexpres.com', 15, 45);
     
     // Datos del cliente
     doc.setFontSize(12);
