@@ -462,7 +462,7 @@ doc.rect(15, y, 180, alturaObservaciones + 4);
     doc.setFont(undefined, 'normal');
     doc.text(`Código de atención: ${codigo || 'N/A'}`, 15, y);
     y += 20;
-    
+
     // Líneas de firma más elegantes
 doc.setLineWidth(0.3);
 doc.setDrawColor(150);
@@ -484,6 +484,9 @@ doc.text('Firma del representante', 120, y + 4);
     doc.save(fileName);
     alert('Cotización generada exitosamente');
 });
+// Guardar el PDF automáticamente
+doc.save(`Cotizacion_${codigoAtencion}.pdf`);
+
 
 // Ejecutar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
