@@ -203,12 +203,27 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+    
 
-    // Generar código de atención automático (nuevo código)
+    document.getElementById('cotizacion-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+         // Verificación mejorada de jsPDF
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+        console.error('jsPDF no está disponible', window.jspdf);
+        alert('Error: La librería PDF no está cargada. Recargue la página.');
+        return;
+    }
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+            // Generar código de atención automático (nuevo código)
     const codigoAtencion = 'SH-' + Math.floor(10000 + Math.random() * 90000);
     document.querySelector('[name="codigo_atencion"]').value = codigoAtencion;
+    console.log("Código generado:", codigoAtencion);
+
+        console.log("Iniciando generación de PDF...");
     
     // Validar campos obligatorios
     const requiredFields = ['fecha_inicio', 'fecha_fin', 'direccion_origen', 'direccion_destino', 'kilometraje'];
@@ -224,10 +239,15 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     
     if (!isValid) return;
 
-    // Obtener el logo del HTML (corregir el ID primero)
+    // Obtener el logo del HTML
+    if (!window.jspdf) {
+        alert('Error: La librería para generar PDF no está cargada');
+        return;
+    }
+
     const logoImg = document.getElementById('logo-img');
     if (!logoImg) {
-        console.error('No se encontró el logo en el HTML');
+        alert('Error al generar PDF: No se encontró el logo');
         return;
     }
     
@@ -237,6 +257,7 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
 
     // Datos del cliente
     const nombre = document.getElementById('cliente-nombre').textContent;
+    console.log("Datos cliente:", {nombre}); // Punto de verificación 5
     const dni = document.getElementById('cliente-dni').textContent;
     const telefono = document.getElementById('cliente-telefono').textContent;
     const direccion = document.getElementById('cliente-direccion').textContent;
@@ -269,12 +290,15 @@ document.getElementById('cotizacion-form').addEventListener('submit', function(e
     });
 
     // Crear PDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-        unit: 'mm',
-        compress: true
-    });
 
+    if (typeof jsPDF !== 'undefined') {
+        const doc = new jsPDF();
+    } else {
+        console.error('jsPDF no está definido');
+        alert('Error: La librería para generar PDF no está disponible');
+        return;
+    }
+    
     // Al inicio del documento, después de crear el PDF:
     doc.setProperties({
     title: `Cotización ${codigoAtencion}`,
@@ -460,7 +484,7 @@ doc.rect(15, y, 180, alturaObservaciones + 4);
     // Código y firma
     doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
-    doc.text(`Código de atención: ${codigo || 'N/A'}`, 15, y);
+    doc.text(`Código de atención: ${codigoAtencion || 'N/A'}`, 15, y);
     y += 20;
 
     // Líneas de firma más elegantes
@@ -481,18 +505,11 @@ doc.text('Firma del representante', 120, y + 4);
     
     // Guardar PDF
     const fileName = `Cotización_${nombre.replace(/\s+/g, '_')}_${fechaInicio.split('T')[0]}.pdf`;
+    console.log("Guardando PDF con nombre:", fileName); // Punto de verificación 9
     doc.save(fileName);
     alert('Cotización generada exitosamente');
 });
-// Guardar el PDF automáticamente
-doc.save(`Cotizacion_${codigoAtencion}.pdf`);
 
-
-// Ejecutar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    setupDateTimePickers();
-    // ... (otras inicializaciones que ya tengas)
-});
 
 
 

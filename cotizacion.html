@@ -130,8 +130,13 @@
     </footer>
 
 
-    <img id="logo-img" src="imagenes/segher-logo-pdf.png" style="display: none;">
+    <img id="logo-img" src="imagenes/segher-logo-pdf.png" style="display: none;" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="cotizacion.js"></script>
+    <script>
+        // Configuración necesaria para versiones recientes
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
+    <script src="ejemplo.js"></script>
+    <!--<script src="cotizacion.js"></script>-->
 </body>
 </html>
